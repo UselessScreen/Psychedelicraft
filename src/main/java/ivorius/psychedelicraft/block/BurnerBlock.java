@@ -54,7 +54,6 @@ public class BurnerBlock extends BlockWithEntity {
         super(settings
                 .nonOpaque()
                 .dynamicBounds()
-                .emissiveLighting((state, world, pos) -> state.getOrEmpty(LIT).orElse(false))
         );
         setDefaultState(getDefaultState().with(LIT, false));
     }
