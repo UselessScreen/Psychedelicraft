@@ -24,6 +24,7 @@ outlet.mcVersionRange = ">=${project.minecraft_version}"
 group = project.group
 description = project.displayname
 archivesBaseName = project.name
+version = project.mod_version
 
 loom {
     mixin.defaultRefmapName = 'psychedelicraft.mixin.refmap.json'
