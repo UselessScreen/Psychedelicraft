@@ -7,12 +7,14 @@ package ivorius.psychedelicraft.block;
 
 import net.minecraft.block.*;
 import net.minecraft.item.ItemConvertible;
-import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.state.property.Properties;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
@@ -24,6 +26,7 @@ public class CannabisPlantBlock extends CropBlock {
     public static final int MAX_AGE_WHILE_COVERED = 11;
 
     private static final VoxelShape SHAPE = Block.createCuboidShape(2, 0, 2, 14, 16, 14);
+    private static final TagKey<Block> TFC_WILD_CROP_GROWS_ON = TagKey.of(RegistryKeys.BLOCK, new Identifier("tfc", "wild_crop_grows_on"));
 
     public static final BooleanProperty GROWING = BooleanProperty.of("growing");
     public static final BooleanProperty NATURAL = BooleanProperty.of("natural");
@@ -84,7 +87,7 @@ public class CannabisPlantBlock extends CropBlock {
     public final boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
         if (state.get(NATURAL)) {
             BlockState floor = world.getBlockState(pos.down());
-            return floor.isOf(this) || floor.isOf(Blocks.GRASS_BLOCK) || floor.isIn(BlockTags.DIRT);
+            return floor.isOf(this) || floor.isIn(TFC_WILD_CROP_GROWS_ON);
         }
         return super.canPlaceAt(state, world, pos);
     }
