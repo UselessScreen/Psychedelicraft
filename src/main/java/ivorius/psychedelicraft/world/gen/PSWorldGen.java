@@ -44,7 +44,7 @@ public interface PSWorldGen {
         plant(PSPlacedFeatures.MORNING_GLORY_PATCH_CHECKED, PSTags.Biomes.HAS_MORNING_GLORY, Generation::morningGlories);
         plant(PSPlacedFeatures.BELLADONNA_PATCH_CHECKED, PSTags.Biomes.HAS_BELLADONNA, Generation::belladonna);
         plant(PSPlacedFeatures.JIMSONWEED_PATCH_CHECKED, PSTags.Biomes.HAS_JIMSONWEED, Generation::jimsonweed);
-        plant(PSPlacedFeatures.TOMATO_PATCH_CHECKED, PSTags.Biomes.HAS_TOMATOES, Generation::tomato);
+//        plant(PSPlacedFeatures.TOMATO_PATCH_CHECKED, PSTags.Biomes.HAS_TOMATOES, Generation::tomato);
         plant(PSPlacedFeatures.PEYOTE_PATCH_CHECKED, PSTags.Biomes.HAS_PEYOTE, Generation::peyote);
         plant(PSPlacedFeatures.AGAVE_PATCH_CHECKED, PSTags.Biomes.HAS_PEYOTE, Generation::peyote);
         plant(PSPlacedFeatures.CANNABIS_TILLED_PATCH, patchSpawnValid, Generation::cannabis);

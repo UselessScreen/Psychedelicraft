@@ -1,11 +1,7 @@
 package ivorius.psychedelicraft.block;
 
 import net.fabricmc.fabric.api.tag.convention.v1.ConventionalItemTags;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Fertilizable;
-import net.minecraft.block.PlantBlock;
-import net.minecraft.block.ShapeContext;
+import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -13,14 +9,19 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
+import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -34,6 +35,8 @@ import net.minecraft.world.event.GameEvent;
 public class NightshadeBlock extends PlantBlock implements Fertilizable {
     public static final IntProperty AGE = Properties.AGE_7;
     public static final int MAX_AGE = Properties.AGE_7_MAX;
+
+    private static final TagKey<Block> TFC_WILD_CROP_GROWS_ON = TagKey.of(RegistryKeys.BLOCK, new Identifier("tfc", "wild_crop_grows_on"));
 
     private static final VoxelShape[] SHAPES = {
             ShapeUtil.createCenteredShape(1, 2, 1),
@@ -130,5 +133,16 @@ public class NightshadeBlock extends PlantBlock implements Fertilizable {
     public void grow(ServerWorld world, Random random, BlockPos pos, BlockState state) {
         int i = Math.min(MAX_AGE, state.get(AGE) + 1);
         world.setBlockState(pos, state.with(AGE, i), Block.NOTIFY_LISTENERS);
+    }
+
+    @Override
+    protected boolean canPlantOnTop(BlockState floor, BlockView world, BlockPos pos) {
+        return floor.isIn(TFC_WILD_CROP_GROWS_ON) || super.canPlantOnTop(floor, world, pos);
+    }
+
+    @Override
+    public final boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
+        BlockState floor = world.getBlockState(pos.down());
+        return floor.isIn(TFC_WILD_CROP_GROWS_ON) || super.canPlaceAt(state, world, pos);
     }
 }
